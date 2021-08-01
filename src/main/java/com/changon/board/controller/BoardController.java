@@ -57,4 +57,39 @@ public class BoardController {
 		
 		return "board/list";
 	}
+	
+	@RequestMapping(value = "/board/view.do")
+	public String openBoardDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
+		if(idx == null) {
+			return "redirect:/board/list.do";
+		}
+		
+		BoardDTO board = boardService.getBoardDetail(idx);
+		if(board == null || "Y".equals(board.getDeleteYn())) {
+			return "redirect:/board/list.do";
+		}
+		model.addAttribute("board",board);
+		
+		return "board/view";
+	}
+	
+	@RequestMapping(value = "/board/delete.do", method = RequestMethod.POST)
+	public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx) {
+		if(idx == null) {
+			return "redirect:/board/list.do";
+		}
+		try {
+			boolean isDeleted = boardService.deleteBoard(idx);
+			if(isDeleted == false) {
+				
+			}
+			
+		}catch(DataAccessException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/board/list.do";
+	}
 }

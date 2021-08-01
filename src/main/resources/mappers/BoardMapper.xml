@@ -76,7 +76,7 @@
 			delete_yn = 'N'
 		ORDER BY
 			notice_yn ASC,
-			idx DESC,
+			idx ASC,
 			insert_time DESC
 	</select>
 	
