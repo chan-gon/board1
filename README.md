@@ -15,6 +15,7 @@
 
 ## 개발환경_Front-end
 - BootStrap4
+- Thymeleaf
 
 
 ## 세부기능
