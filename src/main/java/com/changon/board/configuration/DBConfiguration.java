@@ -11,10 +11,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+@EnableTransactionManagement
 @Configuration // 스프링은 @Configuration이 지정된 클래스를 자바 기반의 설정 파일로 인식한다.
 @PropertySource("classpath:/application.properties") // 해당 클래스에서 참조할 properties 파일 위치 지정
 public class DBConfiguration {
@@ -42,7 +46,7 @@ public class DBConfiguration {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
 		factoryBean.setDataSource(dataSource());
 		factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mappers/**/*Mapper.xml"));
-		factoryBean.setTypeAliasesPackage("com.changon.board.domain");
+		factoryBean.setTypeAliasesPackage("com.changon.board.*");
 		factoryBean.setConfiguration(mybatisConfig());
 		return factoryBean.getObject();
 	}
@@ -56,6 +60,11 @@ public class DBConfiguration {
 	@ConfigurationProperties(prefix = "mybatis.configuration")
 	public org.apache.ibatis.session.Configuration mybatisConfig(){
 		return new org.apache.ibatis.session.Configuration();
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
 	}
 	
 }

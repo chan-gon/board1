@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.changon.board.constant.Method;
 import com.changon.board.domain.BoardDTO;
+import com.changon.board.paging.Criteria;
 import com.changon.board.service.BoardService;
 import com.changon.board.util.UiUtils;
 
@@ -52,11 +55,11 @@ public class BoardController extends UiUtils {
 		return showMessageWithRedirect("게시글 등록 완료", "/board/list.do", Method.GET, null, model);
 	}
 	
-	@RequestMapping(value = "/board/list.do")
-	public String openBoardList(Model model) {
-		List<BoardDTO> boardList = boardService.getBoardList();
+	@GetMapping(value = "/board/list.do")
+	public String openBoardList(@ModelAttribute("params") BoardDTO params, Model model) {
+		List<BoardDTO> boardList = boardService.getBoardList(params);
 		model.addAttribute("boardList", boardList);
-		
+
 		return "board/list";
 	}
 	
