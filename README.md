@@ -6,17 +6,20 @@
 - 게시판 구현은 구현 방식에 따라 완성도가 천차만별이기 때문에 본인이 배운 기초 수준 이상의 퀄리티 있는 게시판을 만들고 싶었다.
 - 구직자의 코드를 검토하는 입장에서(면접관) 게시판 구현이 기타 큰 프로젝트와 비교하여 기술적 차이도 크게 나지 않으면서 수월하게 코드 내용을 파악할 수 있다고 판단했다.
 
-## 개발환경_Back-end
-- Java8
-- Gradle
-- Spring boot
-- Spring Security
-- Spring Data JPA with MySQL
-
 ## 개발환경_Front-end
 - BootStrap4
 - Thymeleaf
 
+## 개발환경_Back-end
+- Java8
+- Gradle
+- Spring boot
+- Spring Data JPA with MySQL
 
 ## 세부기능
-- 업로드 예정
+- 게시글 리스트 출력
+- 페이징
+- 게시글 세부 내용 출력
+- 게시글 삭제
+- 게시글 수정
+- 게시글 댓글
