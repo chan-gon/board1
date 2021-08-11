@@ -14,7 +14,7 @@
 - Java8
 - Gradle
 - Spring boot
-- Spring Data JPA with MySQL
+- MySQL
 
 ## 세부기능
 - 게시글 리스트 출력
@@ -23,3 +23,4 @@
 - 게시글 삭제
 - 게시글 수정
 - 게시글 댓글
+- 파일 업로드
