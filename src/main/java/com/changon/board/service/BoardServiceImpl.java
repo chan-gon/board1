@@ -5,10 +5,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.changon.board.domain.AttachDTO;
 import com.changon.board.domain.BoardDTO;
+import com.changon.board.mapper.AttachMapper;
 import com.changon.board.mapper.BoardMapper;
 import com.changon.board.paging.PaginationInfo;
+import com.changon.board.util.FileUtils;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -16,17 +21,42 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 
+	@Autowired
+	private AttachMapper attachMapper;
+
+	@Autowired
+	private FileUtils fileUtils;
+
 	@Override
 	public boolean registerBoard(BoardDTO params) {
 		int queryResult = 0;
-		
-		if(params.getIdx() == null) {
+
+		if (params.getIdx() == null) {
 			queryResult = boardMapper.insertBoard(params);
-		}else {
+		} else {
 			queryResult = boardMapper.updateBoard(params);
 		}
-		
+
 		return (queryResult == 1) ? true : false;
+	}
+
+	@Override
+	public boolean registerBoard(BoardDTO params, MultipartFile[] files) {
+		int queryResult = 1;
+
+		if (registerBoard(params) == false) {
+			return false;
+		}
+
+		List<AttachDTO> fileList = fileUtils.uploadFiles(files, params.getIdx());
+		if (CollectionUtils.isEmpty(fileList) == false) {
+			queryResult = attachMapper.insertAttach(fileList);
+			if (queryResult < 1) {
+				queryResult = 0;
+			}
+		}
+
+		return (queryResult > 0);
 	}
 
 	@Override
@@ -37,12 +67,13 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean deleteBoard(Long idx) {
 		int queryResult = 0;
-		
+
 		BoardDTO board = boardMapper.selectBoardDetail(idx);
-		if(board != null && "N".equals(board.getDeleteYn())) {
+
+		if (board != null && "N".equals(board.getDeleteYn())) {
 			queryResult = boardMapper.deleteBoard(idx);
 		}
-		
+
 		return (queryResult == 1) ? true : false;
 	}
 
@@ -63,5 +94,4 @@ public class BoardServiceImpl implements BoardService {
 
 		return boardList;
 	}
-
 }

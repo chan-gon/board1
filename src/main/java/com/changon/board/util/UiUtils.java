@@ -1,5 +1,6 @@
 package com.changon.board.util;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.changon.board.constant.Method;
+import com.changon.board.paging.Criteria;
 
 @Controller
 public class UiUtils { // 공용 클래스(게시글 등록, 삭제, 수정 등의 작업 처리 여부 메시지 전송 관리)
@@ -22,5 +24,17 @@ public class UiUtils { // 공용 클래스(게시글 등록, 삭제, 수정 등�
 		model.addAttribute("params", params);
 		
 		return "utils/message-redirect";
+	}
+	
+	public Map<String, Object> getPagingParams(Criteria criteria) {
+
+		Map<String, Object> params = new LinkedHashMap<>();
+		params.put("currentPageNo", criteria.getCurrentPageNo());
+		params.put("recordsPerPage", criteria.getRecordsPerPage());
+		params.put("pageSize", criteria.getPageSize());
+		params.put("searchType", criteria.getSearchType());
+		params.put("searchKeyword", criteria.getSearchKeyword());
+
+		return params;
 	}
 }
