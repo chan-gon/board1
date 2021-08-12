@@ -75,7 +75,19 @@
 				</div>
 			</form>
 
-			<div class="btn_wrap text-center">
+		<div th:if="${not #lists.isEmpty( fileList )}" class="form-group">
+			<label for="inp-type-4" class="col-sm-2 control-label">File</label>
+			<div class="col-sm-10">
+				<div class="form-control file_list">
+					<a th:each="row, status : ${fileList}"
+						th:href="@{/board/download.do( idx=${row.idx} )}"> <i
+						class="fa fa-file-o" aria-hidden="true"></i> [[ ${row.originalName} ]]
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="btn_wrap text-center">
 				<a th:href="@{/board/list.do}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
 				<a th:href="@{/board/write.do( idx=${board.idx} )}" class="btn btn-primary waves-effect waves-light">수정하기</a>
 				<button type="button" class="btn btn-danger waves-effect waves-light" th:onclick="deleteBoard([[ ${board.idx} ]])">삭제하기</button>

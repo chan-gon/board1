@@ -116,4 +116,9 @@ public class BoardServiceImpl implements BoardService {
 		return attachMapper.selectAttachList(boardIdx);
 	}
 
+	@Override
+	public AttachDTO getAttachDetail(Long idx) {
+		return attachMapper.selectAttachDetail(idx);
+	}
+
 }
