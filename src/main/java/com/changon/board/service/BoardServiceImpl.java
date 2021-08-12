@@ -17,7 +17,7 @@ import com.changon.board.util.FileUtils;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-	
+
 	@Autowired
 	private BoardMapper boardMapper;
 

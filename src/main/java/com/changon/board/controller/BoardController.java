@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.changon.board.constant.Method;
+import com.changon.board.domain.AttachDTO;
 import com.changon.board.domain.BoardDTO;
 import com.changon.board.service.BoardService;
 import com.changon.board.util.UiUtils;
@@ -34,6 +35,9 @@ public class BoardController extends UiUtils {
 				return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
 			}
 			model.addAttribute("board", board);
+			
+			List<AttachDTO> fileList = boardService.getAttachFileList(idx);
+			model.addAttribute("fileList", fileList);
 		}
 
 		return "board/write";
