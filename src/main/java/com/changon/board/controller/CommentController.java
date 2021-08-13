@@ -56,7 +56,7 @@ public class CommentController {
 			jsonObj.addProperty("result", isRegistered);
 
 		} catch (DataAccessException e) {
-			jsonObj.addProperty("message", "데이터베이스 처리 과정에 문제가 발생하였습니다.");
+			jsonObj.addProperty("message", "데이터베이스 처리 과정에 문제가 발생하였습니다..");
 
 		} catch (Exception e) {
 			jsonObj.addProperty("message", "시스템에 문제가 발생하였습니다.");
